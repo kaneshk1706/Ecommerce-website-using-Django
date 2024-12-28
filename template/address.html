@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Address{% endblock title %}
+
+{% block main-content %}
+
+<!-- Header Section -->
+
+
+<!-- Address Section -->
+<div class="container my-5">
+    <div class="row">
+        <h3 style="text-align: center; font-family: Times new roman;">My Addresses</h3>
+
+        <div class="col-sm-12 mt-4">
+            <div class="row">
+                {% for ad in add %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Address {{ forloop.counter }}</h3>
+                                <p class="card-text">Name: {{ ad.name }}</p>
+                                <p class="card-text">Gender: {{ ad.gender }}</p>
+                                <p class="card-text">Address: {{ ad.Address }}</p>
+                                <p class="card-text">Country: {{ ad.country }}</p>
+                                <p class="card-text">State: {{ ad.state }}</p>
+                                <p class="card-text">City: {{ ad.city }}</p>
+                                <p class="card-text">Pincode: {{ ad.pincode }}</p>
+                                <p class="card-text">Mobile: {{ ad.mobile }}</p>
+                                <p class="text-center">
+                                    <a href="{% url 'updateAddress' pk=ad.id %}" type="button" class="btn btn-success">Update</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+
+{% endblock main-content %}

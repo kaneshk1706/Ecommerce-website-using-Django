@@ -1,0 +1,37 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "-webkit-tap-highlight-color",
+          "-ms-filter"
+        ]
+      }
+    ],
+    "css-prefix-order": "off",
+    "create-element-svg": "off",
+    "no-inline-styles": "off",
+    "axe/aria": "off",
+    "axe/text-alternatives": [
+      "default",
+      {
+        "image-alt": "off"
+      }
+    ],
+    "axe/forms": [
+      "default",
+      {
+        "select-name": "off",
+        "label": "off"
+      }
+    ],
+    "axe/structure": "off",
+    "button-type": "off",
+    "axe/name-role-value": "off",
+    "meta-viewport": "off"
+  }
+}

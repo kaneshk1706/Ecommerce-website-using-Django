@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Purchase Now{% endblock title %}
+{% block main-content %}
+<style>
+    .orders-container {
+        background: linear-gradient(to bottom, #f6f9fc, #e9eff3);
+        padding: 20px;
+    }
+    
+    .orders-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    
+    .order-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .order-card:hover {
+        transform: scale(1.05);
+    }
+    
+    .order-details {
+        display: flex;
+        align-items: center;
+    }
+    
+    .product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 20px;
+    }
+    
+    .product-info {
+        flex: 1;
+    }
+    
+    .order-status {
+        margin-top: 20px;
+    }
+    
+    .progress-bar-container {
+        background: #f0f0f0;
+        border-radius: 4px;
+        height: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .progress-bar {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+    
+    /* Add hover effects and additional styles as needed */
+</style>
+
+<div class="container orders-container">
+    <h2 class="text-center">Welcome <span class="text-capitalize">{{ request.user }}</span></h2>
+    <div class="orders-list">
+        {% for op in order_placed %}
+        <div class="order-card">
+            <div class="order-details">
+                {% if op.product.img %}
+                    <img src="{{ op.product.img.url }}" class="product-image" alt="{{ op.product.name }}">
+                {% else %}
+                    <div class="product-image" style="background-color: #ccc;"></div>
+                {% endif %}
+                <div class="product-info">
+                    <p class="product-name">Product: {{ op.product.name }}</p>
+                    <p>Quantity: {{ op.quantity }}</p>
+                    <p>Price: {{ op.total_cost }}</p>
+                    <p>Order Date: {{ op.ordered_date }}</p>
+                </div>
+            </div>
+            <div class="order-status">
+                <p>Order Status: {{ op.status }}</p>
+                <div class="progress-bar-container">
+                    {% if op.status == 'Accepted' %}
+                        <div class="progress-bar bg-primary" style="width: 20%"></div>
+                    {% elif op.status == 'Packed' %}
+                        <div class="progress-bar bg-info" style="width: 40%"></div>
+                    {% elif op.status == 'On The Way' %}
+                        <div class="progress-bar bg-warning" style="width: 70%"></div>
+                    {% elif op.status == 'Delivered' %}
+                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                    {% elif op.status == 'Cancel' %}
+                        <div class="progress-bar bg-danger" style="width: 100%"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+    </div>
+</div>
+{% endblock main-content %}

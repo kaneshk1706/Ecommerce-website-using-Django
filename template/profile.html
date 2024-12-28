@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+
+{% block main-content %}
+<style>
+.card {
+    max-width: 400px; /* Adjust card width */
+    margin: 0 auto; /* Center the card */
+    background-color: #fff; /* Set card background color to white */
+    color: #000; /* Set text color to black */
+    border-radius: 5px; /* Add border radius */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    transition: transform 0.3s ease-in-out; /* Add transition for smooth animation */
+    
+    
+}
+</style>
+
+    <div class="container my-5">
+        <div class="col">
+            <h3 style="text-align: center; font-family: Times new roman;">Welcome <span class="yecy-capitalize">{{ request.user }}</span> Add New Address</h3>
+            
+            
+            <form action="" method="post" novalidate class="shadow p-5 card">
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}}{{fm}}<small class="text-danger">{{fm.errors|striptags}}</small>
+                    <br>
+                {% endfor %}
+                <input type="submit" value="Submit" class="btn btn-primary"><br><br>
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my-3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if messages %}
+                    {% for msg in messages %}
+                        <div class="alert alert-{{msg.tags}}" role="alert">
+                            {{msg}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock main-content %}
+
+

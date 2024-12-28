@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status Update</title>
+</head>
+<body>
+    <p>Your order with ID #{{ order.id }} has been updated to "{{ order.status }}".</p>
+    <p>Details:</p>
+    <ul>
+        <li>Order ID: {{ order.id }}</li>
+        <li>Payment ID: {{ order.payment.id }}</li>
+        <li>Ordered Product: {{ order.product.name }}</li>
+        <li>Quantity: {{ order.quantity }}</li>
+    </ul>
+    <p>You can view the details of your order <a href="{{ request.build_absolute_uri }}">here</a>.</p>
+</body>
+</html>

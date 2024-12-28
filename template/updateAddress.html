@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registration{% endblock title %}
+
+{% block main-content %}
+    <style>
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .btn {
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .alert {
+            border-radius: 5px;
+            transition: opacity 0.3s;
+        }
+
+        .alert:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Update Address</h3>
+
+                        <form action="" method="post" novalidate>
+                            {% csrf_token %}
+                            {% for fm in form %}
+                                {{form.Address_id}}{{fm}}<small class="text-danger">{{fm.errors|striptags}}</small>
+                                <br>
+                            {% endfor %}
+
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" name="delete_Address" value="1" class="btn btn-danger">Delete</button>
+                                <a href="{% url 'Address' %}" class="btn btn-secondary">Back</a>
+                            </div>
+
+                            {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                    <p class="alert alert-danger my-3">{{error}}</p>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if messages %}
+                                {% for msg in messages %}
+                                    <div class="alert alert-{{msg.tags}}" role="alert">
+                                        {{msg}}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}

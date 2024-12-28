@@ -1,0 +1,309 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: #343a40;
+    font-family: 'Times New Roman', serif;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #ffcc00;
+    color: white;
+}
+
+.animated {
+    animation-duration: 1s;
+}
+
+.btn-search {
+    background-color: #ffcc00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    background-color: #343a40;
+    border: 1px solid #343a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    color: #ffffff;
+}
+
+.nav-item {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.nav-item:last-child {
+    margin-right: auto;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #39ff14;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.nav-link:hover {
+    border-color: #ffcc00;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+    margin: 0 8px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item.dropdown {
+    position: relative;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    background-color: #343a40;
+    border: 1px solid #343a40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    position: absolute;
+    z-index: 1000;
+}
+
+.dropdown-item:hover {
+    background-color: #ffcc00;
+    color: #333333;
+}
+
+.navbar-brand img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.navbar-toggler {
+    border: 1px solid red;
+}
+
+.navbar-toggler-icon {
+    background-color: rgb(0, 0, 0);
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.goodnesssec {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+.goodnesssec:hover {
+    transform: scale(1.05);
+}
+
+.img-responsive {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.img-responsive:hover {
+    transform: scale(1.1);
+}
+
+.product-card {
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.product-card:hover {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.product-card:hover .btn {
+    background-color: #cf0000;
+    color: #fff;
+    border-color: #00ffb3;
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.col {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form-select-custom {
+    width: 50%;
+    margin-right: 10px;
+}
+
+#reviews-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#reviews-list li {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+#reviews-list li p {
+    margin: 0;
+}
+
+#reviews-list li button.delete-review-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#reviews-list li button.delete-review-btn:hover {
+    background-color: #c82333;
+}
+
+#average-rating {
+    font-weight: bold;
+    color: #007bff;
+}
+
+#review-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#review-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#review-form textarea,
+#review-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+#review-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#review-form button:hover {
+    background-color: #0056b3;
+}
+
+#submit-review,
+.delete-review-btn {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#submit-review:hover,
+.delete-review-btn:hover {
+    background-color: #218838;
+}
+
+.delete-review-btn:focus {
+    outline: none;
+}
+
+.contact-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.contact-form-container {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.contact-form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.message-container {
+    margin-top: 20px;
+}
+
+.message {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}

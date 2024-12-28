@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile{% endblock title %}
+
+{% block main-content %}
+<div class="container">
+    <div class="row justify-content-center"> <!-- Center the card -->
+        <div class="col-lg-6"><br><br>
+            <div class="card">
+                <div class="card-body" style="padding: 20px;"> <!-- Reduced padding -->
+                    <h3 class="card-title text-center mb-4">Edit Profile</h3>
+                    <hr>
+
+                    <form method="post" action="{% url 'edit_profile' %}" onsubmit="return validateForm()">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ customer.name }}" onkeyup="validateName(this)">
+                            <div id="nameError" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="male" {% if customer.gender == 'male' %}selected{% endif %}>Male</option>
+                                <option value="female" {% if customer.gender == 'female' %}selected{% endif %}>Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" class="form-control" id="city" name="city" value="{{ customer.city }}" onkeyup="validateCityStateCountry(this)">
+                            <div id="cityError" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Mobile:</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" value="{{ customer.mobile }}" onkeyup="validateMobile(this)">
+                            <div id="mobileError" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Pincode:</label>
+                            <input type="text" class="form-control" id="pincode" name="pincode" value="{{ customer.pincode }}" onkeyup="validatePincode(this)">
+                            <div id="pincodeError" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <input type="text" class="form-control" id="state" name="state" value="{{ customer.state }}" onkeyup="validateCityStateCountry(this)">
+                            <div id="stateError" class="text-danger"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country:</label>
+                            <input type="text" class="form-control" id="country" name="country" value="{{ customer.country }}" onkeyup="validateCityStateCountry(this)">
+                            <div id="countryError" class="text-danger"></div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        function validateName(input) {
+            var nameRegex = /^[a-zA-Z\s]+$/;
+            if (!nameRegex.test(input.value)) {
+                document.getElementById("nameError").innerHTML = "Name should only contain letters and spaces.";
+            } else {
+                document.getElementById("nameError").innerHTML = "";
+            }
+        }
+
+        function validateCityStateCountry(input) {
+            var cityStateCountryRegex = /^[a-zA-Z\s]+$/;
+            if (!cityStateCountryRegex.test(input.value)) {
+                input.id === "city" ? document.getElementById("cityError").innerHTML = "City should only contain letters and spaces." :
+                input.id === "state" ? document.getElementById("stateError").innerHTML = "State should only contain letters and spaces." :
+                document.getElementById("countryError").innerHTML = "Country should only contain letters and spaces.";
+            } else {
+                input.id === "city" ? document.getElementById("cityError").innerHTML = "" :
+                input.id === "state" ? document.getElementById("stateError").innerHTML = "" :
+                document.getElementById("countryError").innerHTML = "";
+            }
+        }
+
+        function validateMobile(input) {
+            var mobileRegex = /^[6789]\d{9}$/;
+            if (!mobileRegex.test(input.value)) {
+                document.getElementById("mobileError").innerHTML = "Mobile number should start with 6, 7, 8, or 9 and be 10 digits long.";
+            } else {
+                document.getElementById("mobileError").innerHTML = "";
+            }
+        }
+
+        function validatePincode(input) {
+            var pincodeRegex = /^\d{6}$/;
+            if (!pincodeRegex.test(input.value)) {
+                document.getElementById("pincodeError").innerHTML = "Pincode should be 6 digits long.";
+            } else {
+                document.getElementById("pincodeError").innerHTML = "";
+            }
+        }
+
+        function validateForm() {
+            var nameError = document.getElementById("nameError").innerHTML;
+            var cityError = document.getElementById("cityError").innerHTML;
+            var stateError = document.getElementById("stateError").innerHTML;
+            var countryError = document.getElementById("countryError").innerHTML;
+            var mobileError = document.getElementById("mobileError").innerHTML;
+            var pincodeError = document.getElementById("pincodeError").innerHTML;
+
+            var name = document.getElementById("name").value.trim();
+            var city = document.getElementById("city").value.trim();
+            var state = document.getElementById("state").value.trim();
+            var country = document.getElementById("country").value.trim();
+            var mobile = document.getElementById("mobile").value.trim();
+            var pincode = document.getElementById("pincode").value.trim();
+
+            if (!name || !city || !state || !country || !mobile || !pincode) {
+                document.getElementById("nameError").innerHTML = name ? "" : "Name is required.";
+                document.getElementById("cityError").innerHTML = city ? "" : "City is required.";
+                document.getElementById("stateError").innerHTML = state ? "" : "State is required.";
+                document.getElementById("countryError").innerHTML = country ? "" : "Country is required.";
+                document.getElementById("mobileError").innerHTML = mobile ? "" : "Mobile is required.";
+                document.getElementById("pincodeError").innerHTML = pincode ? "" : "Pincode is required.";
+                return false;
+            }
+
+            if (nameError || cityError || stateError || countryError || mobileError || pincodeError) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+{% endblock main-content %}

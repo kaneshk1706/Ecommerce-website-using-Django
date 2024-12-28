@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search Result{% endblock title %}
+
+{% block main-content %}
+
+
+    <div class="container my-5">
+        {% if query and product %}
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="row">
+                        {% for prod in product %}
+                            <div class="col-sm-4 text-center mb-4 hover-shadow">
+                                <a href="{% url 'product-detail' prod.id %}" class="btn">
+                                    <div>
+                                        <img src="{{prod.img.url}}" width="300px" height="250px" />
+                                        <div class="fw-bold">{{prod.name}}</div>
+                                        <div class="fw-bold text-danger">
+                                            Rs.{{prod.dis_price}}/-
+                                            <small class="fw-light text-decoration-line-through">{{prod.price}}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% elif not query %}
+            <div class="row">
+                <div class="text-center text-danger">
+                    <h1>Please enter a search query.</h1><br><br><br><br>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="text-center text-danger">
+                    <h1>No record found on this product.</h1><br><br><br><br>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock main-content %}

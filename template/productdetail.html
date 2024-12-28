@@ -1,0 +1,308 @@
+<!-- productdetail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Product Detail{% endblock title %}
+
+{% block main-content %}
+<style>
+    body {
+        font-family: 'Montserrat',serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat',serif;
+    }
+
+    p, ul, ol, label, button, input, textarea, select {
+        font-family: 'Montserrat',serif;
+    }
+    .product-features {
+        text-align: justify;
+    }
+    .review-card {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%; /* Adjust the width to match the writing review card */
+        max-width: 100%; /* Set the max-width to ensure responsiveness */
+    }
+    
+    /* Adjust the width of the rating select element */
+    #rating {
+        font-size: 12px;
+        width: 80px; /* Adjust the width as needed */
+    }
+    .star-rating {
+        font-size: 24px;
+    }
+    .star {
+        cursor: pointer;
+        color: #ccc;
+    }
+    .star.active, .star:hover {
+        color: yellow;
+    }
+    #reviews-list {
+        width: 100%;
+        /* Adjust the height to match the review input area */
+        overflow-y: auto; /* Add scrollbars if needed */
+    }
+    
+    .delete-icon {
+        color: red;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    .image {
+        width: 500px; /* Set the desired width */
+        height: 500px; /* Set the desired height */
+        object-fit: contain; /* Maintain aspect ratio and fit within the container */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .image:hover {
+        transform: scale(1.05);
+    }
+    /* Custom CSS for Product Detail Page */
+
+.productdetail {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.productdetail h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.productdetail h5 {
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.productdetail small {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.productdetail h4 {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.productdetail ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.productdetail .text-success {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.productdetail .text-danger {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.productdetail form {
+    margin-top: 20px;
+}
+
+.productdetail .star-rating {
+    font-size: 24px;
+}
+
+.productdetail .star {
+    cursor: pointer;
+    color: #ccc;
+}
+
+.productdetail .star.active, .productdetail .star:hover {
+    color: yellow;
+}
+
+.productdetail #reviews-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.productdetail .average-rating {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+ 
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
+<div class="container">
+    <div class="row flex justify-content-between animated fadeIn">
+        <div class="img2 col-lg-6 mt-5">
+            <img src="{{product.img.url}}" class="image col-xs-6 col-sm-12 col-lg-12 mt-3 text-sm-center w-100 h-auto" alt="" id="productImage">
+        </div>
+
+        <div class="productdetail col-lg-6 animated zoomIn">
+            <h1 style="font-family: 'times new roman', cursive; font-size: 50px">{{product.name}}</h1>
+            <h5 class="fw-bold text-danger">Rs.{{product.dis_price}}/-</h5>
+            <small class="text-decoration-line-through text-muted fs-5"><del>Rs. {{product.price}}/- </del></small>
+            <br><br>
+            <h4>Product Features</h4>
+            <ul class="fs-5" style="font-family: times new roman;">
+                <li>{{product.desc}}</li>
+            </ul>
+       
+            {% if product.stock_available %}
+                <h1 class="text-success">In Stock</h1>
+                <form action="/add-to-cart" class="d-inline">
+                    <input type="hidden" name="prod_id" value="{{ product.id }}">
+                    <button type="submit" class="cart btn btn-danger">
+                        <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                    </button>
+                    <button type="submit" class="buynow btn btn-warning">Buy Now</button>
+                </form>
+                
+            {% else %}
+                <h1 class="text-danger">Out of Stock</h1>
+            {% endif %}
+            
+            {% if wishlist %}
+                <a pid={{product.id}} class="minus-wishlist btn btn-danger shadow px-5 py-2 ms-4"><i class="fas fa-heart fa-lg"></i></a>
+            {% else %}
+                <a pid={{product.id}} class="plus-wishlist btn btn-success shadow px-5 py-2 ms-4  "><i class="fas fa-heart fa-lg"></i></a>
+            {% endif %}
+        </div>
+
+        <div class="container mt-2 align-center">
+            <h2>Add a Review</h2>
+            <div id="review-form">
+                <div>
+                    <label for="review">Write your review:</label>
+                    <textarea id="review" rows="4" cols="10" class="align-center"></textarea>
+                </div>
+                <div>
+                    <label for="rating">Rating:</label>
+                    <input type="hidden" id="rating" name="rating"> <!-- Hidden input to store the selected rating -->
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">&#9733;</span>
+                        <span class="star" data-rating="2">&#9733;</span>
+                        <span class="star" data-rating="3">&#9733;</span>
+                        <span class="star" data-rating="4">&#9733;</span>
+                        <span class="star" data-rating="5">&#9733;</span>
+                    </div>
+                </div>
+              
+
+                <button id="submit-review">Submit Review</button>
+
+            </div>
+        </div>
+
+       <!-- Display Existing Reviews Section -->
+        <div class="container">
+            <h2>Product Reviews</h2>
+            <ul id="reviews-list">
+                <!-- Existing reviews will be displayed here using JavaScript -->
+            </ul>
+            <div>
+                <h3>Average Rating: <span id="average-rating">0</span></h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var totalReviews = 0;
+        var totalRating = 0;
+
+        function submitReview() {
+            var reviewText = document.getElementById('review').value;
+            var rating = parseInt(document.getElementById('rating').value);
+
+            var listItem = document.createElement('li');
+            listItem.classList.add('review-card'); // Add a class to style the review card
+            listItem.innerHTML = '<p>' + reviewText + ' (Rating: ' + rating + ')</p>' +
+                                '<i class="fas fa-trash-alt delete-icon"></i>';
+
+            var reviewsList = document.getElementById('reviews-list');
+            reviewsList.appendChild(listItem);
+
+            totalReviews++;
+            totalRating += rating;
+
+            var averageRating = totalRating / totalReviews;
+            document.getElementById('average-rating').innerText = averageRating.toFixed(1);
+            document.getElementById('total-reviews').innerText = totalReviews;
+
+            document.getElementById('review').value = '';
+            document.getElementById('rating').value = '1';
+        }
+
+        function deleteReview(icon) {
+            var listItem = icon.parentElement;
+            var reviewText = listItem.querySelector('p').innerText;
+            var rating = parseInt(reviewText.match(/\d+/)[0]);
+
+            listItem.remove();
+
+            totalReviews--;
+            totalRating -= rating;
+
+            var averageRating = totalReviews > 0 ? totalRating / totalReviews : 0;
+            document.getElementById('average-rating').innerText = averageRating.toFixed(1);
+            document.getElementById('total-reviews').innerText = totalReviews;
+        }
+
+        document.getElementById('submit-review').addEventListener('click', function (event) {
+            event.preventDefault();
+            submitReview();
+        });
+
+        document.getElementById('reviews-list').addEventListener('click', function (event) {
+            if (event.target && event.target.matches('.delete-icon')) {
+                deleteReview(event.target);
+            }
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function () {
+                const rating = this.getAttribute('data-rating');
+                highlightStars(rating);
+            });
+
+            star.addEventListener('click', function () {
+                const rating = this.getAttribute('data-rating');
+                ratingInput.value = rating;
+                submitReview(); // Call your submitReview function here
+            });
+        });
+
+        function highlightStars(rating) {
+            stars.forEach(star => {
+                if (star.getAttribute('data-rating') <= rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+    });
+
+</script>
+{% endblock main-content %}

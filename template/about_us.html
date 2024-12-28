@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}About Us{% endblock title %}
+
+{% block main-content %}
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+  }
+  .hero {
+    background: url('https://picsum.photos/2000/800?image=100') no-repeat center center;
+    background-size: cover;
+    padding: 150px 0;
+    text-align: center;
+    color: white;
+  }
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+  .section {
+    padding: 60px 0;
+    text-align: center;
+  }
+  .section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .section p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
+  .card {
+    margin-bottom: 30px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .card-body {
+    padding: 30px;
+  }
+  .card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .card p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .card img {
+    border-radius: 5px;
+  }
+  .btn-primary {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<section class="hero">
+  <div class="container">
+    <h1>About Us</h1>
+    <p>Committed to bringing the best to our customers</p>
+  </div>
+</section>
+
+<section class="section" id="mission">
+  <div class="container">
+    <h2>Our Mission</h2>
+    <p>To provide top-notch products and services that empower our customers and enhance their lives.</p>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="https://picsum.photos/800/600?image=20" class="card-img-top" alt="Quality Products">
+          <div class="card-body">
+            <h3>Quality Products</h3>
+            <p>We offer a wide range of high-quality products sourced from trusted suppliers.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="https://picsum.photos/800/600?image=30" class="card-img-top" alt="Customer Service">
+          <div class="card-body">
+            <h3>Exceptional Service</h3>
+            <p>Our customer service team is here to assist you with all your needs, ensuring a seamless shopping experience.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="https://redstagfulfillment.com/wp-content/uploads/Ec0-Friendly-Ecommerce-Store.png" class="card-img-top" alt="Sustainable Products">
+          <div class="card-body">
+            <h3>Sustainability</h3>
+            <p>We are committed to sustainable practices and products that benefit our planet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg-light" id="team">
+  <div class="container">
+    <h2>Meet the Team</h2>
+    <p>Our dedicated team works tirelessly to bring you the best products and services.</p>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <img src="https://picsum.photos/400/400?image=50" class="card-img-top" alt="Team Member 1">
+          <div class="card-body">
+            <h3>Yogesh</h3>
+            <p>CEO & Founder</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="https://picsum.photos/400/400?image=60" class="card-img-top" alt="Team Member 2">
+          <div class="card-body">
+            <h3>Sarathkumar</h3>
+            <p>Director of Human Resource</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="https://picsum.photos/400/400?image=70" class="card-img-top" alt="Team Member 3">
+          <div class="card-body">
+            <h3>Kaneshk</h3>
+            <p>Developer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <img src="https://picsum.photos/400/400?image=80" class="card-img-top" alt="Team Member 4">
+          <div class="card-body">
+            <h3>Selvamani</h3>
+            <p>Lead Developer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="testimonials">
+  <div class="container">
+    <h2>What Our Customers Say</h2>
+    <p>Hear from our satisfied customers who love our products and services.</p>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <p>"Amazing quality and fantastic customer service! Highly recommend."</p>
+            <p><strong>- Alex Johnson</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <p>"A seamless shopping experience from start to finish."</p>
+            <p><strong>- Emily Davis</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <p>"I love the sustainable products. They are good for me and the environment."</p>
+            <p><strong>- Mark Wilson</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main-content %}

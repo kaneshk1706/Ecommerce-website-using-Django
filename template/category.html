@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+{% block title %}Category{% endblock title %}
+
+{% block main-content %}
+<br><br>
+<style>
+    /* Sidebar */
+    .sidebar {
+        position: fixed;
+        top: 80px;
+        left: 20px;
+        width: 250px;
+        height: calc(100% - 110px); /* Reduced height */
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Toggle button */
+    #toggleSort {
+        position: absolute;
+        top: 20px;
+        right: -30px; /* Adjust right position to hide toggle button */
+        background-color: #fff;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    /* Sort options */
+    .sort-options {
+        margin-top: 20px;
+    }
+
+    .form-label {
+        margin-bottom: 10px;
+    }
+
+    .sorting-options {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sorting-options li {
+        margin-bottom: 10px;
+    }
+
+    .sorting-options label {
+        cursor: pointer;
+        display: block;
+    }
+
+    /* Search input */
+    .search-container {
+        position: relative;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    #searchInput {
+        padding: 8px 40px 8px 30px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 50px; /* Make the search input cylindrical */
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+
+    /* No products message */
+    .no-products-message {
+        margin-top: 20px;
+    }
+    
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        z-index: 999; /* Ensure footer appears above sidebar */
+    }
+
+    /* Container */
+    .container {
+        margin-left: 280px; /* Adjusted to accommodate sidebar width and padding */
+        margin-bottom: 20px;
+        padding-bottom: 20px; /* Add padding to match the footer height */
+    }
+    
+    .product-card img {
+        width: 300px;
+        height: 300px;
+        animation-duration: 1s;
+        animation-name: zoomIn;
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale3d(0.3, 0.3, 0.3);
+        }
+
+        50% {
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+
+        to {
+            transform: scale3d(1, 1, 1);
+        }
+    }
+
+    /* Animate product name and price */
+    .product-card .fw-bold {
+        animation-duration: 0.5s;
+        animation-name: fadeInUp;
+    }
+
+    .product-card .text-danger {
+        animation-duration: 0.5s;
+        animation-name: fadeInUp;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* No products message */
+    .no-products-message {
+        margin-top: 10px; /* Reduce the margin-top */
+    }
+
+    .product-info {
+        margin-top: 10px;
+    }
+    
+    .product-info .fw-bold {
+        font-size: 20px; /* Adjust font size as needed */
+    }
+    
+    .price-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .current-price {
+        font-size: 24px; /* Adjust font size as needed */
+        color: red; /* Change color to your preference */
+    }
+    
+    .original-price {
+        margin-left: 10px;
+        font-size: 18px; /* Adjust font size as needed */
+        color: #888; /* Change color to your preference */
+        text-decoration: line-through;
+    }
+</style>
+
+
+<br>
+<div class="sidebar position-absolute">
+    <div class="sort-options">
+        <form for="sortCriteria" class="form-label">Filter:</form>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" placeholder=" Search in category">
+        </div>
+        <ul class="sorting-options">
+            <li><label><input type="checkbox" class="sort-option" value="price_asc"> Price (Low to High)</label></li>
+            <li><label><input type="checkbox" class="sort-option" value="price_desc"> Price (High to Low)</label></li>
+            
+            <li><label><input type="checkbox" class="sort-option" value="name_asc"> Name (A-Z)</label></li>
+            <li><label><input type="checkbox" class="sort-option" value="name_desc"> Name (Z-A)</label></li>
+            <li><label><input type="checkbox" class="sort-option" value="0-500"> ₹0 - ₹500</label></li>
+            <li><label><input type="checkbox" class="sort-option" value="501-5000"> ₹501 - ₹5000</label></li>
+            <li><label><input type="checkbox" class="sort-option" value="5001-15000"> ₹5001 - ₹15000</label></li>
+            <li><label><input type="checkbox" class="sort-option" value="15001-"> Above ₹15000</label></li>
+        </ul>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="col" id="productList">
+        <div class="row">
+            {% for prod in product %}
+            <div class="col text-center mb-4 product-card animate__animated animate__bounceIn" data-price="{{ prod.dis_price }}">
+                <a href="{% url 'product-detail' prod.id %}">
+                    <div><br>
+                        <img src="{{prod.img.url}}" width="300px" height="300px" class="animate__animated animate__zoomIn">
+                        <div class="product-info animate__animated animate__fadeInUp">
+                            <div class="fw-bold">{{prod.name}}</div>
+                            <div class="price-info">
+                                <span class="current-price text-danger">₹{{prod.dis_price}}/-</span>
+                                <span class="original-price fw-light text-decoration-line-through">₹{{prod.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-12 no-products-message text-center" id="noProductsMessage" style="display: none;">
+        <h1>No products are available at the selected price range.</h1>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var productList = document.getElementById("productList");
+        var sortOptions = document.querySelectorAll(".sort-option");
+        var noProductsMessage = document.getElementById("noProductsMessage");
+        var searchInput = document.getElementById("searchInput");
+        var toggleSort = document.getElementById("toggleSort");
+        var sidebar = document.querySelector(".sidebar");
+
+        // Show sidebar initially
+        sidebar.classList.add("open");
+
+        sortOptions.forEach(function (option) {
+            option.addEventListener("change", function () {
+                var selectedOptions = Array.from(document.querySelectorAll(".sort-option:checked")).map(function (checkbox) {
+                    return checkbox.value;
+                });
+
+                var productRows = productList.getElementsByClassName("row")[0];
+                var productCards = productRows.getElementsByClassName("col");
+
+                var sortedCards = Array.from(productCards);
+
+                if (selectedOptions.length === 0) {
+                    sortedCards.forEach(function (card) {
+                        card.style.display = ""; // Show all cards if no option is selected
+                    });
+                    return;
+                }
+
+                var productsAvailable = false;
+
+                sortedCards.forEach(function (card) {
+                    var price = parseFloat(card.dataset.price);
+                    var name = card.querySelector(".fw-bold").innerText.toLowerCase();
+                    var display = selectedOptions.every(function (option) {
+                        if (option.includes("-")) {
+                            if (option.startsWith("15001-")) {
+                                // Handle "Above ₹15000" option
+                                var minPrice = parseFloat(option.split("-")[0]);
+                                return price >= minPrice;
+                            } else {
+                                // Handle other price range options
+                                var priceRange = option.split("-");
+                                var minPrice = parseFloat(priceRange[0]);
+                                var maxPrice = parseFloat(priceRange[1]);
+                                return (price >= minPrice && (maxPrice === 0 || price <= maxPrice));
+                            }
+                        } else if (option === "name_asc") {
+                            return true;
+                        } else if (option === "name_desc") {
+                            return true;
+                        } else if (option === "price_asc") {
+                            return true;
+                        } else if (option === "price_desc") {
+                            return true;
+                        } else {
+                            return false; // Ignore other options
+                        }
+                    });
+
+                    card.style.display = display ? "" : "none";
+                    if (display) {
+                        productsAvailable = true;
+                    }
+                });
+
+                if (!productsAvailable) {
+                    // If no products are available at the selected sorting option, show the message
+                    noProductsMessage.style.display = "block";
+                } else {
+                    // If products are available, hide the message
+                    noProductsMessage.style.display = "none";
+                }
+
+                // Sorting logic for options "name_asc", "name_desc", "price_asc", and "price_desc"
+                if (selectedOptions.includes("name_asc")) {
+                    sortedCards.sort((a, b) => {
+                        var nameA = a.querySelector(".fw-bold").innerText.toLowerCase();
+                        var nameB = b.querySelector(".fw-bold").innerText.toLowerCase();
+                        return nameA.localeCompare(nameB);
+                    });
+                } else if (selectedOptions.includes("name_desc")) {
+                    sortedCards.sort((a, b) => {
+                        var nameA = a.querySelector(".fw-bold").innerText.toLowerCase();
+                        var nameB = b.querySelector(".fw-bold").innerText.toLowerCase();
+                        return nameB.localeCompare(nameA);
+                    });
+                } else if (selectedOptions.includes("price_asc")) {
+                    sortedCards.sort((a, b) => {
+                        var priceA = parseFloat(a.dataset.price);
+                        var priceB = parseFloat(b.dataset.price);
+                        return priceA - priceB;
+                    });
+                } else if (selectedOptions.includes("price_desc")) {
+                    sortedCards.sort((a, b) => {
+                        var priceA = parseFloat(a.dataset.price);
+                        var priceB = parseFloat(b.dataset.price);
+                        return priceB - priceA;
+                    });
+                }
+                else if (option === "ratings_desc") {
+                    sortedCards.sort((a, b) => {
+                        var ratingA = parseFloat(a.dataset.rating); // Assuming you have a data attribute for ratings
+                        var ratingB = parseFloat(b.dataset.rating);
+                        return ratingB - ratingA;
+                    });
+                } else if (option === "ratings_asc") {
+                    sortedCards.sort((a, b) => {
+                        var ratingA = parseFloat(a.dataset.rating);
+                        var ratingB = parseFloat(b.dataset.rating);
+                        return ratingA - ratingB;
+                    });
+                }
+
+
+                // Re-append sorted cards to the product list
+                productRows.innerHTML = "";
+                sortedCards.forEach(card => {
+                    productRows.appendChild(card);
+                });
+            });
+        });
+
+        searchInput.addEventListener("input", function () {
+            var searchTerm = searchInput.value.toLowerCase();
+
+            var productRows = productList.getElementsByClassName("row")[0];
+            var productCards = productRows.getElementsByClassName("col");
+
+            var sortedCards = Array.from(productCards);
+
+            sortedCards.forEach(function (card) {
+                var productName = card.querySelector(".fw-bold").innerText.toLowerCase();
+                var display = productName.includes(searchTerm);
+                card.style.display = display ? "" : "none";
+            });
+
+            // Show or hide the no products message
+            var visibleCards = Array.from(productRows.getElementsByClassName("col")).filter(function (card) {
+                return card.style.display !== "none";
+            });
+            if (visibleCards.length === 0) {
+                noProductsMessage.style.display = "block";
+            } else {
+                noProductsMessage.style.display = "none";
+            }
+        });
+    });
+</script>
+
+{% endblock main-content %}

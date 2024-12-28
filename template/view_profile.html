@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}View Profile{% endblock title %}
+
+{% block main-content %}
+    <div class="container my-5">
+        <div class="col-lg-6 offset-lg-3">
+            <h3 class="text-center">My Profile</h3>
+            <hr>
+
+            <!-- Display user profile information -->
+            <div class="card shadow profile-card" style="text-align:left; padding: 10px; margin-bottom: 20px;">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email Address:</strong> {{ user.email }}</p>
+                {% if customer %}
+                    <p><strong>Name:</strong> <span id="customerName">{{ customer.name }}</span></p>
+                    <p><strong>Gender:</strong> <span id="customerGender">{{ customer.gender }}</span></p>
+                    <p><strong>City:</strong> <span id="customerCity">{{ customer.city }}</span></p>
+                    <p><strong>Mobile:</strong> <span id="customerMobile">{{ customer.mobile }}</span></p>
+                    <p><strong>Pincode:</strong> <span id="customerPincode">{{ customer.pincode }}</span></p>
+                    <p><strong>State:</strong> <span id="customerState">{{ customer.state }}</span></p>
+                    <p><strong>Country:</strong> <span id="customerCountry">{{ customer.country }}</span></p>
+
+                    <!-- Edit Button -->
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit</a>
+                {% else %}
+                    <p>No profile details found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}

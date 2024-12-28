@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registration{% endblock title %}
+
+{% block main-content %}
+<style>
+    .registration-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; /* Adjust the height as needed */
+    }
+    .registration-card {
+        background-color: #fff;
+        border-radius: 50px; /* Adjust this value for the curvature */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 1000px; /* Adjust the max-width for card expansion */
+        display: flex;
+    }
+    .side-image {
+        flex: 1;
+        background-image: url('{% static 'images/register.png' %}');
+        background-size: cover;
+        background-position: center;
+        border-radius: 50px 0 0 50px; /* Adjust this value for the curvature */
+    }
+    .form-container {
+        flex: 1;
+        padding: 40px;
+    }
+    .form-container h3 {
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .form-container .form-control {
+        border-radius: 20px; /* Adjust this value for the curvature */
+        padding: 12px 16px;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    .form-container .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 20px; /* Adjust this value for the curvature */
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+    }
+    .form-container .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004a99;
+    }
+    .form-container small a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .form-container small a:hover {
+        color: #0056b3;
+    }
+</style>
+
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
+<div class="registration-container">
+    <div class="registration-card">
+        <div class="side-image"></div>
+        <div class="form-container">
+            <h3>New User Registration</h3>
+            <form action="" method="post" novalidate class="shadow p-5">
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}}{{fm}}<small class="text-danger">{{fm.errors|striptags}}</small>
+                    <br>
+                {% endfor %}
+
+                <small><a href="{% url 'password_reset' %}">Forgot Password?</a></small><br>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="privacy-policy" required>
+                    <label class="form-check-label" for="privacy-policy">
+                        I agree to the <a href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-4">Register</button>
+                <div class="text-center text-dark fw-bold mt-3">
+                    <small>Already have an account? <a href="{% url 'login' %}" class="text-danger">Login</a></small>
+                </div>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my-3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div><br><br><br><br><br><br><br><br><br>
+<script>
+    const registerForm = document.querySelector('#register-form');
+    const privacyCheckbox = document.querySelector('#privacy-policy');
+    
+    registerForm.addEventListener('submit', function(event) {
+      if (!privacyCheckbox.checked) {
+        event.preventDefault();
+        alert('Please accept the Privacy Policy to register.');
+      }
+    });
+</script>
+{% endblock main-content %}
